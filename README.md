@@ -40,8 +40,16 @@ Tutoriel complet pour installer et utiliser OpenClaw sur un VPS avec un bot Disc
 
 | # | Étape | Description |
 |---|---|---|
-| - | [Référence — Commandes Discord](02-configuration-utilisation/etapes/etape-00-commandes-discord.md) | Slash commands essentielles, modèle, session, administration |
 | 1 | [Concepts : agent principal vs spécialisés](02-configuration-utilisation/etapes/etape-01-concepts.md) | Architecture multi-agents, workspaces, bindings |
+| 2 | [Premier contact avec l'agent principal](02-configuration-utilisation/etapes/etape-02-premier-contact.md) | DM Discord, personnalisation via conversation |
+| 3 | [Créer l'agent assistant](02-configuration-utilisation/etapes/etape-03-creer-agent.md) | Un prompt → l'agent crée workspace, config, bindings Discord |
+| 4 | [Personnaliser l'agent assistant](02-configuration-utilisation/etapes/etape-04-personnalisation.md) | Interview par l'agent principal → SOUL, IDENTITY, USER, MEMORY |
+| 5 | [Notes, rappels et todos](02-configuration-utilisation/etapes/etape-05-usages.md) | Langage naturel, ce que l'agent fait en coulisses |
+| 6 | [Créer un skill custom](02-configuration-utilisation/etapes/etape-06-skill-custom.md) | L'agent crée son propre skill sur demande |
+| 7 | [Maintenance et debug](02-configuration-utilisation/etapes/etape-07-maintenance.md) | Agent principal d'abord, CLI en dernier recours |
+| - | [Référence — Commandes Discord](02-configuration-utilisation/etapes/etape-00-commandes-discord.md) | Slash commands essentielles, modèle, session, administration |
+
+---(02-configuration-utilisation/etapes/etape-01-concepts.md) | Architecture multi-agents, workspaces, bindings |
 | 2 | [Premier contact avec l'agent principal](02-configuration-utilisation/etapes/etape-02-premier-contact.md) | DM Discord, personnalisation via conversation |
 | 3 | [Créer l'agent assistant](02-configuration-utilisation/etapes/etape-03-creer-agent.md) | Un prompt → l'agent crée workspace, config, bindings Discord |
 | 4 | [Personnaliser l'agent assistant](02-configuration-utilisation/etapes/etape-04-personnalisation.md) | Interview par l'agent principal → SOUL, IDENTITY, USER, MEMORY |
