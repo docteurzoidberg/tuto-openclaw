@@ -6,33 +6,36 @@ Créer, personnaliser et utiliser un agent OpenClaw dédié à l'assistance pers
 
 À la fin de ce tuto :
 - Comprendre la différence entre **agent principal** et **agents spécialisés**
-- Avoir un **agent principal** personnalisé pour les tâches OpenClaw
-- Avoir un **agent assistant personnel** sur un channel Discord dédié
+- Avoir un **agent principal** personnalisé pour les tâches OpenClaw (créer agents, projets, bots…)
+- Avoir un **agent assistant personnel** attaché à des channels Discord dédiés
 - L'assistant prend des notes, envoie des rappels, gère des todolists
 - Personnalité custom via `SOUL.md`, mémoire via `MEMORY.md`
 - Un skill custom créé de zéro
-- Accès CLI sur le VPS via SSH pour debug et administration
+- Accès admin via le CLI OpenClaw sur le VPS en SSH
 
-## Décisions de conception
+## Stack & décisions
 
-- **Agent principal** (`agent:main`) → tâches OpenClaw (créer agents, projets, bots…) + personnalisé avec SOUL/MEMORY
-- **Agent assistant** → agent secondaire nommé par l'utilisateur, attaché à des channels Discord dédiés (`#assistant`, `#notes`, `#rappels`, `#todo`)
-- **Prompt de bootstrap** → l'agent principal pose les bonnes questions pour configurer l'assistant (personnalité, préférences, cas d'usage)
-- **Accès admin** → CLI OpenClaw sur le VPS via SSH (pas UI web ni app desktop)
+| Élément | Choix |
+|---|---|
+| **Agent principal** | `agent:main` — tâches OpenClaw, création d'agents, admin |
+| **Agent assistant** | `agent:assistant` — notes, rappels, todos |
+| **Channels Discord** | `#assistant`, `#notes`, `#rappels`, `#todo` → tous sur l'agent assistant |
+| **Accès admin** | CLI OpenClaw sur le VPS via SSH (pas UI web ni app desktop) |
+| **Bootstrap** | Prompt dédié pour que l'agent principal interview l'utilisateur |
 
-## Étapes prévues
+## Étapes
 
-- [ ] Étape 1 — Concepts : agent principal vs agents spécialisés
-- [ ] Étape 2 — Personnaliser l'agent principal (onboarding, SOUL, MEMORY)
-- [ ] Étape 3 — Créer l'agent assistant personnel
-- [ ] Étape 4 — Attacher l'agent à des channels Discord (`#assistant`, `#notes`, `#rappels`, `#todo`)
-- [ ] Étape 5 — Prompt de bootstrap : laisser l'agent principal interviewer l'utilisateur
-- [ ] Étape 6 — Personnaliser la SOUL de l'assistant (personnalité, ton, langue)
-- [ ] Étape 7 — Configurer la mémoire longue durée (MEMORY.md)
-- [ ] Étape 8 — Cas d'usage : notes, rappels (cron), todolists
-- [ ] Étape 9 — Créer un skill custom (exemple : todolist en Markdown)
-- [ ] Étape 10 — Accès et debug via le CLI OpenClaw sur le VPS (SSH)
+- [ ] [Étape 1 — Concepts : agent principal vs agents spécialisés](etapes/etape-01-concepts.md)
+- [ ] [Étape 2 — Personnaliser l'agent principal](etapes/etape-02-agent-principal.md)
+- [ ] [Étape 3 — Créer l'agent assistant](etapes/etape-03-creer-agent.md)
+- [ ] [Étape 4 — Attacher l'agent aux channels Discord](etapes/etape-04-discord-binding.md)
+- [ ] [Étape 5 — Prompt de bootstrap : interview utilisateur](etapes/etape-05-bootstrap-interview.md)
+- [ ] [Étape 6 — Personnaliser la SOUL (personnalité, ton, langue)](etapes/etape-06-soul.md)
+- [ ] [Étape 7 — Configurer la mémoire longue durée (MEMORY.md)](etapes/etape-07-memory.md)
+- [ ] [Étape 8 — Cas d'usage : notes, rappels (cron), todolists](etapes/etape-08-usages.md)
+- [ ] [Étape 9 — Créer un skill custom (todolist Markdown)](etapes/etape-09-skill-custom.md)
+- [ ] [Étape 10 — Debug et administration via CLI SSH](etapes/etape-10-cli-ssh.md)
 
 ## Statut
 
-🟡 En cours de planification
+🟡 En cours de rédaction
