@@ -86,7 +86,7 @@ tuto-openclaw/
 ## Roadmap
 
 - [x] Partie 1 — Setup VPS & Installation (6 étapes)
-- [x] Partie 2 — Configuration & Utilisation (10 étapes)
+- [x] Partie 2 — Configuration & Utilisation (7 étapes, approche conversation-first)
 - [x] Partie 3 — Hardening (structure + principes + Fail2Ban — placeholders reverse proxy/VPN)
 - [ ] Partie 3 — Compléter étape 2 (reverse proxy) une fois la techno choisie
 - [ ] Partie 3 — Compléter étape 3 (VPN mesh) une fois la techno choisie

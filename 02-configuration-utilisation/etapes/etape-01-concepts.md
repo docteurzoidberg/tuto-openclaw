@@ -1,89 +1,34 @@
 # Étape 1 — Concepts : agent principal vs agents spécialisés
 
 > [!NOTE]
-> Avant de créer quoi que ce soit, comprendre comment OpenClaw organise les agents.
-> C'est la base pour tout ce qui suit.
+> Avant de commencer, comprendre comment OpenClaw organise les agents.
+> C'est la base de tout ce qui suit.
 
 ---
 
-## L'agent principal (`agent:main`)
+## L'agent principal
 
 Quand tu as installé OpenClaw, un agent a été créé automatiquement : l'**agent principal**.
 
-C'est l'agent qui :
-- répond par défaut à tous les messages entrants
-- a accès à l'ensemble de ton workspace
-- peut créer d'autres agents, modifier la configuration, gérer des projets
-- est le point d'entrée naturel pour les tâches d'administration OpenClaw
+C'est lui qui a répondu quand tu as envoyé ton premier DM au bot Discord.
+C'est lui qui connaît OpenClaw, qui peut créer d'autres agents, modifier la configuration,
+gérer des projets. **C'est ton interlocuteur pour tout ce qui concerne OpenClaw lui-même.**
 
-**Think of it as the control room.** Tu lui parles pour tout ce qui concerne OpenClaw lui-même.
+Il a accès à des outils puissants : modifier sa propre configuration, créer des fichiers,
+planifier des tâches, lancer des commandes sur le serveur. Tu n'as pas à faire tout ça
+toi-même — tu lui demandes, il s'en occupe.
 
 ---
 
 ## Les agents spécialisés
 
 OpenClaw permet de créer plusieurs agents, chacun avec :
-- son propre **workspace** (fichiers, mémoire, notes)
-- sa propre **personnalité** (`SOUL.md`)
-- ses propres **outils** autorisés
-- son propre **modèle IA** si besoin
-- ses propres **channels Discord** attachés
+- Sa propre **personnalité** et son propre **ton**
+- Sa propre **mémoire** (fichiers séparés)
+- Ses propres **channels Discord** — il ne répond que là où tu l'as assigné
 
-Un agent spécialisé ne répond que dans les contextes qui lui sont assignés — il n'interfère pas avec les autres.
-
-### Exemple de setup à 2 agents
-
-```
-┌─────────────────────────────────────────────────┐
-│               OpenClaw Gateway                  │
-│                                                  │
-│  agent:main              agent:assistant         │
-│  ├─ workspace/           ├─ workspace-assistant/ │
-│  ├─ SOUL.md (admin)      ├─ SOUL.md (perso)      │
-│  ├─ MEMORY.md            ├─ MEMORY.md            │
-│  └─ Channels:            └─ Channels:            │
-│     └─ Discord DM           ├─ #assistant        │
-│                             ├─ #notes            │
-│                             ├─ #rappels          │
-│                             └─ #todo             │
-└─────────────────────────────────────────────────┘
-```
-
----
-
-## Les workspaces
-
-Chaque agent a son propre dossier workspace sur le VPS.
-C'est là que vivent ses fichiers de personnalité, sa mémoire, ses notes.
-
-| Fichier | Rôle |
-|---|---|
-| `AGENTS.md` | Instructions de comportement, règles de fonctionnement |
-| `SOUL.md` | Personnalité, ton, style de réponse |
-| `IDENTITY.md` | Nom, emoji, avatar |
-| `USER.md` | Profil de l'utilisateur (préférences, langue, etc.) |
-| `MEMORY.md` | Mémoire longue durée — persiste entre les sessions |
-| `TOOLS.md` | Notes sur les outils disponibles |
-| `HEARTBEAT.md` | Checklist pour les tâches périodiques proactives |
-
-Ces fichiers sont **injectés automatiquement** dans le contexte de l'agent à chaque session.
-L'agent les lit, les comprend, et s'en souvient.
-
----
-
-## Les bindings Discord
-
-Par défaut, tous les messages Discord vont vers l'**agent principal**.
-
-Pour qu'un channel aille vers un agent spécialisé, on configure un **binding** :
-
-```
-Channel #notes  →  agent:assistant
-Channel #rappels →  agent:assistant
-DM Bot          →  agent:main  (par défaut)
-```
-
-Le binding est précis : seul le channel configuré est redirigé. Les autres restent sur l'agent principal.
+Un agent spécialisé ne voit pas les conversations des autres agents.
+Chaque channel Discord peut avoir son propre agent dédié.
 
 ---
 
@@ -92,11 +37,26 @@ Le binding est précis : seul le channel configuré est redirigé. Les autres re
 ```
 Toi (Discord)
  │
- ├─ DM au bot           → agent:main    (admin OpenClaw)
- ├─ #assistant          → agent:assistant  (conversation générale)
- ├─ #notes              → agent:assistant  (prise de notes)
- ├─ #rappels            → agent:assistant  (rappels & cron)
- └─ #todo               → agent:assistant  (gestion de tâches)
+ ├─ DM au bot              → agent principal  (admin, gestion OpenClaw)
+ ├─ #assistant             → agent assistant  (conversation générale)
+ ├─ #notes                 → agent assistant  (prise de notes)
+ ├─ #rappels               → agent assistant  (rappels & tâches planifiées)
+ └─ #todo                  → agent assistant  (liste de tâches)
 ```
 
-➡️ **Étape suivante : [Étape 2 — Personnaliser l'agent principal](./etape-02-agent-principal.md)**
+L'agent assistant aura sa propre personnalité, sa propre mémoire,
+et gérera tes notes, rappels et todos au quotidien.
+
+---
+
+## Comment ça va se passer
+
+**Tu n'auras pas à éditer de fichiers de configuration.**
+
+Tu vas envoyer des messages à l'agent principal — en DM Discord.
+Il va poser des questions, générer les fichiers nécessaires, configurer les channels,
+et créer l'agent assistant à ta place.
+
+C'est exactement comme ça qu'OpenClaw est fait pour être utilisé.
+
+➡️ **Étape suivante : [Étape 2 — Premier contact avec l'agent principal](./etape-02-premier-contact.md)**

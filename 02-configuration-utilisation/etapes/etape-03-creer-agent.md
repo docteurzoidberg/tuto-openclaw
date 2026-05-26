@@ -1,132 +1,87 @@
 # Étape 3 — Créer l'agent assistant
 
 > [!NOTE]
-> On crée ici un second agent dédié à l'assistance personnelle.
-> Il aura son propre workspace, sa propre personnalité, et ses propres channels Discord.
+> On demande à l'agent principal de créer l'agent assistant à notre place.
+> Un seul prompt suffit pour tout mettre en place.
 
 ---
 
-## 1. Créer le workspace de l'agent assistant
+## Créer les channels Discord d'abord
 
-```bash
-mkdir -p ~/openclaw/workspace-assistant
-```
+Avant de donner les instructions à l'agent, crée ces 4 channels texte sur ton serveur Discord :
 
-Ce dossier est le "cerveau" de l'agent assistant — ses fichiers de personnalité
-et sa mémoire y vivront séparément de l'agent principal.
+- `#assistant` — conversation générale
+- `#notes` — prise de notes
+- `#rappels` — rappels et tâches planifiées
+- `#todo` — liste de tâches
 
----
-
-## 2. Déclarer l'agent dans la configuration OpenClaw
-
-```bash
-cat > /tmp/assistant-agent.patch.json5 <<'JSON5'
-{
-  agents: {
-    list: [
-      {
-        id: "main",
-        default: true,
-        name: "Agent Principal",
-        workspace: "/home/openclaw/openclaw/workspace",
-      },
-      {
-        id: "assistant",
-        name: "Assistant",
-        workspace: "/home/openclaw/openclaw/workspace-assistant",
-      },
-    ],
-  },
-}
-JSON5
-```
-
-> [!IMPORTANT]
-> Les chemins doivent correspondre aux chemins **à l'intérieur du conteneur Docker**.
-> Le workspace monté dans le conteneur est `/home/openclaw/openclaw/workspace` —
-> vérifie dans ton `.env` la valeur de `OPENCLAW_WORKSPACE_DIR`.
-
-Dry-run puis application :
-
-```bash
-docker compose run --rm openclaw-cli config patch --file /tmp/assistant-agent.patch.json5 --dry-run
-docker compose run --rm openclaw-cli config patch --file /tmp/assistant-agent.patch.json5
-```
+Pour chaque channel, récupère son **Channel ID** :
+> Clic droit sur le channel → **Copier l'identifiant du channel** *(mode développeur requis — activé à la partie 1)*
 
 ---
 
-## 3. Initialiser les fichiers bootstrap de l'agent assistant
+## Le prompt de création
 
-OpenClaw peut générer les fichiers de base automatiquement :
+En DM avec l'agent principal, envoie ce message en remplaçant les IDs :
 
-```bash
-docker compose run --rm openclaw-cli setup --agent assistant
+```
+Je veux créer un second agent dédié à mon assistance personnelle.
+Voici sa configuration :
+
+- ID de l'agent : assistant
+- Channels Discord à lui assigner :
+  - #assistant → ID : XXXXXXXXXXXXXX
+  - #notes     → ID : XXXXXXXXXXXXXX
+  - #rappels   → ID : XXXXXXXXXXXXXX
+  - #todo      → ID : XXXXXXXXXXXXXX
+
+Peux-tu :
+1. Créer un workspace dédié pour cet agent
+2. Le déclarer dans la configuration OpenClaw
+3. Configurer les bindings Discord pour ces 4 channels
+4. Initialiser ses fichiers de base (SOUL.md, IDENTITY.md, USER.md, MEMORY.md, AGENTS.md)
+5. Redémarrer le gateway pour appliquer les changements
 ```
 
-Vérifie que les fichiers sont bien créés :
+L'agent va s'occuper de tout.
 
-```bash
-ls ~/openclaw/workspace-assistant/
-# AGENTS.md  SOUL.md  IDENTITY.md  USER.md  TOOLS.md  HEARTBEAT.md  MEMORY.md
+---
+
+## Ce que l'agent va faire en coulisses
+
+1. **Créer le workspace** `~/openclaw/workspace-assistant/` sur le VPS
+2. **Déclarer l'agent** dans `openclaw.json` avec son workspace dédié
+3. **Configurer les bindings** — les 4 channels Discord redirigés vers `agent:assistant`
+4. **Générer les fichiers bootstrap** dans `workspace-assistant/`
+5. **Redémarrer le gateway** pour appliquer
+
+---
+
+## Vérifier que ça fonctionne
+
+Envoie un message dans `#assistant` sur ton serveur Discord.
+L'agent assistant doit répondre — avec sa personnalité générique pour l'instant.
+
+Si le bot ne répond pas dans `#assistant`, demande à l'agent principal :
+
+```
+L'agent assistant ne répond pas dans #assistant. Peux-tu vérifier la configuration des bindings ?
 ```
 
 ---
 
-## 4. Monter le workspace assistant dans Docker
+## Les fichiers de l'agent assistant
 
-Le nouveau workspace doit être accessible dans le conteneur. Édite ton `.env` :
+Après la création, ces fichiers existent dans `~/openclaw/workspace-assistant/` sur le VPS.
+Tu n'as pas à les toucher — l'agent les gère lui-même.
+Ils sont là si tu veux les consulter ou si tu as besoin de les inspecter un jour.
 
-```bash
-nano ~/openclaw/.env
-```
+| Fichier | Rôle |
+|---|---|
+| `SOUL.md` | Personnalité, ton, principes |
+| `IDENTITY.md` | Nom, emoji |
+| `USER.md` | Ton profil utilisateur |
+| `MEMORY.md` | Mémoire longue durée |
+| `AGENTS.md` | Instructions de comportement |
 
-Ajoute le mount supplémentaire :
-
-```env
-OPENCLAW_EXTRA_MOUNTS=/home/openclaw/openclaw/workspace-assistant:/home/openclaw/openclaw/workspace-assistant:rw
-```
-
-> [!NOTE]
-> `OPENCLAW_EXTRA_MOUNTS` accepte plusieurs mounts séparés par des virgules.
-
-Recrée le fichier Compose avec le mount supplémentaire et redémarre :
-
-```bash
-cd ~/openclaw
-./setup.sh  # régénère docker-compose.extra.yml avec les nouveaux mounts
-docker compose -f docker-compose.yml -f docker-compose.extra.yml up -d
-```
-
-> [!NOTE]
-> Une fois `OPENCLAW_EXTRA_MOUNTS` défini, utilise toujours les deux fichiers Compose :
-> ```bash
-> docker compose -f docker-compose.yml -f docker-compose.extra.yml <commande>
-> ```
-> Tu peux créer un alias dans `~/.bashrc` pour simplifier :
-> ```bash
-> alias oc="docker compose -f ~/openclaw/docker-compose.yml -f ~/openclaw/docker-compose.extra.yml"
-> ```
-> Puis utiliser `oc up -d`, `oc restart`, `oc logs -f openclaw-gateway`, etc.
-
----
-
-## 5. Vérifier que les deux agents sont actifs
-
-```bash
-docker compose run --rm openclaw-cli agents list
-```
-
-Tu dois voir `main` et `assistant` dans la liste.
-
----
-
-## Récapitulatif
-
-- [x] Workspace `workspace-assistant/` créé sur le VPS
-- [x] Agent `assistant` déclaré dans la config avec son workspace
-- [x] Fichiers bootstrap initialisés dans `workspace-assistant/`
-- [x] Mount Docker ajouté via `OPENCLAW_EXTRA_MOUNTS`
-- [x] Gateway redémarré avec les deux fichiers Compose
-- [x] Les deux agents visibles dans `agents list`
-
-➡️ **Étape suivante : [Étape 4 — Attacher l'agent aux channels Discord](./etape-04-discord-binding.md)**
+➡️ **Étape suivante : [Étape 4 — Personnaliser l'agent assistant](./etape-04-personnalisation.md)**

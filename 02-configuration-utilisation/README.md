@@ -1,6 +1,7 @@
 # 📘 Partie 2 — Configuration & Utilisation
 
-Créer un agent assistant personnel, le personnaliser et l'utiliser au quotidien.
+Créer un agent assistant personnel en parlant à l'agent principal.
+Pas de fichiers de config à éditer — tu converses, l'agent fait.
 
 ## Prérequis
 
@@ -9,22 +10,19 @@ Créer un agent assistant personnel, le personnaliser et l'utiliser au quotidien
 ## Étapes
 
 - [x] [Étape 1 — Concepts : agent principal vs agents spécialisés](etapes/etape-01-concepts.md)
-- [x] [Étape 2 — Personnaliser l'agent principal](etapes/etape-02-agent-principal.md)
+- [x] [Étape 2 — Premier contact avec l'agent principal](etapes/etape-02-premier-contact.md)
 - [x] [Étape 3 — Créer l'agent assistant](etapes/etape-03-creer-agent.md)
-- [x] [Étape 4 — Attacher l'agent aux channels Discord](etapes/etape-04-discord-binding.md)
-- [x] [Étape 5 — Prompt de bootstrap : interview utilisateur](etapes/etape-05-bootstrap-interview.md)
-- [x] [Étape 6 — Personnaliser la SOUL (personnalité, ton, langue)](etapes/etape-06-soul.md)
-- [x] [Étape 7 — Configurer la mémoire longue durée (MEMORY.md)](etapes/etape-07-memory.md)
-- [x] [Étape 8 — Cas d'usage : notes, rappels, todolists](etapes/etape-08-usages.md)
-- [x] [Étape 9 — Créer un skill custom](etapes/etape-09-skill-custom.md)
-- [x] [Étape 10 — Debug et administration via CLI SSH](etapes/etape-10-cli-ssh.md)
+- [x] [Étape 4 — Personnaliser l'agent assistant](etapes/etape-04-personnalisation.md)
+- [x] [Étape 5 — Notes, rappels et todos](etapes/etape-05-usages.md)
+- [x] [Étape 6 — Créer un skill custom](etapes/etape-06-skill-custom.md)
+- [x] [Étape 7 — Maintenance et debug](etapes/etape-07-maintenance.md)
 
 ## Résultat
 
 À la fin de cette partie, tu as :
-- Un agent principal configuré pour l'administration OpenClaw
+- Un agent principal configuré à ton goût
 - Un agent assistant personnel avec sa propre personnalité et sa propre mémoire
 - 4 channels Discord dédiés (`#assistant`, `#notes`, `#rappels`, `#todo`)
-- Notes, rappels et todolists opérationnels
+- Notes, rappels et todos opérationnels — gérés en langage naturel
 - Un skill custom pour la gestion des tâches
-- Les outils pour debugger et administrer depuis le VPS
+- Les clés pour maintenir et débugger via l'agent ou le CLI en dernier recours

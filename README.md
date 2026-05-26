@@ -35,20 +35,18 @@ Tutoriel complet pour installer et utiliser OpenClaw sur un VPS avec un bot Disc
 
 ### [Partie 2 — Configuration & Utilisation](02-configuration-utilisation/README.md)
 
-> Agent assistant personnel : personnalisation, mémoire, skills, cas d'usage — 10 étapes
+> Agent assistant personnel : création via conversation, personnalisation, cas d'usage — 7 étapes
+> **Philosophie : tu parles à l'agent principal, il fait le reste.**
 
 | # | Étape | Description |
 |---|---|---|
 | 1 | [Concepts : agent principal vs spécialisés](02-configuration-utilisation/etapes/etape-01-concepts.md) | Architecture multi-agents, workspaces, bindings |
-| 2 | [Personnaliser l'agent principal](02-configuration-utilisation/etapes/etape-02-agent-principal.md) | USER.md, IDENTITY.md, SOUL.md, MEMORY.md |
-| 3 | [Créer l'agent assistant](02-configuration-utilisation/etapes/etape-03-creer-agent.md) | Workspace dédié, déclaration config, Docker mounts |
-| 4 | [Attacher l'agent aux channels Discord](02-configuration-utilisation/etapes/etape-04-discord-binding.md) | Bindings `#assistant` `#notes` `#rappels` `#todo` |
-| 5 | [Prompt de bootstrap : interview utilisateur](02-configuration-utilisation/etapes/etape-05-bootstrap-interview.md) | L'agent principal génère les fichiers de config |
-| 6 | [Personnaliser la SOUL](02-configuration-utilisation/etapes/etape-06-soul.md) | Personnalité, ton, langue, principes, limites |
-| 7 | [Configurer la mémoire longue durée](02-configuration-utilisation/etapes/etape-07-memory.md) | MEMORY.md, notes quotidiennes, cycle de mémorisation |
-| 8 | [Cas d'usage : notes, rappels, todolists](02-configuration-utilisation/etapes/etape-08-usages.md) | Exemples concrets par channel |
-| 9 | [Créer un skill custom](02-configuration-utilisation/etapes/etape-09-skill-custom.md) | Skill todolist Markdown pas à pas |
-| 10 | [Debug et administration via CLI SSH](02-configuration-utilisation/etapes/etape-10-cli-ssh.md) | Commandes essentielles, scénarios de debug |
+| 2 | [Premier contact avec l'agent principal](02-configuration-utilisation/etapes/etape-02-premier-contact.md) | DM Discord, personnalisation via conversation |
+| 3 | [Créer l'agent assistant](02-configuration-utilisation/etapes/etape-03-creer-agent.md) | Un prompt → l'agent crée workspace, config, bindings Discord |
+| 4 | [Personnaliser l'agent assistant](02-configuration-utilisation/etapes/etape-04-personnalisation.md) | Interview par l'agent principal → SOUL, IDENTITY, USER, MEMORY |
+| 5 | [Notes, rappels et todos](02-configuration-utilisation/etapes/etape-05-usages.md) | Langage naturel, ce que l'agent fait en coulisses |
+| 6 | [Créer un skill custom](02-configuration-utilisation/etapes/etape-06-skill-custom.md) | L'agent crée son propre skill sur demande |
+| 7 | [Maintenance et debug](02-configuration-utilisation/etapes/etape-07-maintenance.md) | Agent principal d'abord, CLI en dernier recours |
 
 ---
 
