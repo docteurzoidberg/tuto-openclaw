@@ -34,14 +34,18 @@ Tape `exit` ou `Ctrl+C` pour quitter.
 
 ## Étapes
 
-- [x] [Étape 7 — Maintenance et debug](etapes/etape-07-maintenance.md)
-- [x] [Référence — Commandes Discord (slash commands)](etapes/etape-00-commandes-discord.md)
+- [x] [Étape 1 — Concepts : agent principal vs agents spécialisés](etapes/etape-01-concepts.md)
 - [x] [Étape 2 — Premier contact avec l'agent principal](etapes/etape-02-premier-contact.md)
 - [x] [Étape 3 — Créer l'agent assistant](etapes/etape-03-creer-agent.md)
 - [x] [Étape 4 — Personnaliser l'agent assistant](etapes/etape-04-personnalisation.md)
 - [x] [Étape 5 — Notes, rappels et todos](etapes/etape-05-usages.md)
 - [x] [Étape 6 — Créer un skill custom](etapes/etape-06-skill-custom.md)
 - [x] [Étape 7 — Maintenance et debug](etapes/etape-07-maintenance.md)
+
+## Annexes
+
+- [Mémo — Commandes Discord (slash commands)](etapes/etape-00-commandes-discord.md)
+- [Mémo — Commandes CLI OpenClaw](etapes/annexe-commandes-cli.md)
 
 ## Résultat
 
