@@ -20,15 +20,15 @@ tuto-openclaw/
 - **Accès UI :** SSH tunnel (phase 1) — reverse proxy / Tailscale à planifier plus tard
 - **Niveau lecteur :** technique, à l'aise SSH/Linux, découverte d'OpenClaw
 
-## Étapes prévues
+## Étapes
 
-- [ ] Étape 1 — Setup VPS (vérifs OS, user dédié, SSH hardening, UFW, Docker Compose)
-- [ ] Étape 2 — Installation OpenClaw via Docker Compose
-- [ ] Étape 3 — Création du bot Discord (Developer Portal)
-- [ ] Étape 4 — Configuration OpenClaw + Discord
-- [ ] Étape 5 — Accès à l'UI via SSH tunnel
-- [ ] Étape 6 — Audit sécurité & vérifications finales
-- [ ] (Futur) Étape 7 — Hardening : Fail2Ban, reverse proxy ou Tailscale
+- [x] [Étape 1 — Setup VPS](etapes/etape-01-setup-vps.md) — user dédié, SSH hardening, UFW, Docker
+- [x] [Étape 2 — Installation OpenClaw](etapes/etape-02-installation.md) — Docker Compose, onboarding, GitHub Copilot / Claude Code
+- [x] [Étape 3 — Créer le bot Discord](etapes/etape-03-discord-bot.md) — Developer Portal, token, IDs
+- [x] [Étape 4 — Connecter Discord à OpenClaw](etapes/etape-04-config-discord.md) — config, pairing, DMs, channels
+- [x] [Étape 5 — Accès à l'UI via SSH tunnel](etapes/etape-05-ssh-tunnel.md)
+- [x] [Étape 6 — Audit sécurité & vérifications finales](etapes/etape-06-audit.md)
+- [ ] (Futur) Hardening : Fail2Ban, reverse proxy ou Tailscale
 
 ## Décisions actées
 
@@ -39,4 +39,5 @@ tuto-openclaw/
 
 ## Statut
 
-🟡 En cours de planification — Étape 1
+✅ Tuto 1 — Setup complet (6 étapes)
+🟡 Tuto 2 — Agent assistant personnel (en cours de planification)
