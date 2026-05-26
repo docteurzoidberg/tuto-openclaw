@@ -12,6 +12,7 @@ Tutoriel complet pour installer et utiliser OpenClaw sur un VPS avec un bot Disc
 |---|---|
 | [`01-setup-installation/`](01-setup-installation/README.md) | Du VPS vierge au bot Discord opérationnel |
 | [`02-configuration-utilisation/`](02-configuration-utilisation/README.md) | Agent assistant personnel, personnalisation, cas d'usage |
+| [`03-hardening/`](03-hardening/README.md) | *(Optionnel)* Exposition sécurisée de l'UI, Fail2Ban, audit final |
 
 ---
 
@@ -51,8 +52,22 @@ Tutoriel complet pour installer et utiliser OpenClaw sur un VPS avec un bot Disc
 
 ---
 
+### [Partie 3 — Hardening](03-hardening/README.md) *(optionnel)*
+
+> Exposition sécurisée de l'UI, protection du VPS — technologie à choisir
+
+| # | Étape | Description |
+|---|---|---|
+| 1 | [Principes : exposition sécurisée de l'UI](03-hardening/etapes/etape-01-principes.md) | Reverse proxy vs VPN mesh, comparatif |
+| 2 | [Option A : Reverse proxy](03-hardening/etapes/etape-02-reverse-proxy.md) | 🚧 Traefik / Caddy / Nginx — à choisir |
+| 3 | [Option B : VPN mesh](03-hardening/etapes/etape-03-vpn-mesh.md) | 🚧 Tailscale / WireGuard — à choisir |
+| 4 | [Fail2Ban](03-hardening/etapes/etape-04-fail2ban.md) | Protection SSH et services exposés |
+| 5 | [Audit final et checklist hardening](03-hardening/etapes/etape-05-audit-final.md) | Checklist complète post-hardening |
+
+---
+
 ## 🗺️ Roadmap
 
 - [x] Partie 1 — Setup VPS & Installation
 - [x] Partie 2 — Configuration & Utilisation
-- [ ] Partie 3 — Hardening (Fail2Ban, Traefik ou Tailscale)
+- [x] Partie 3 — Hardening *(structure + placeholders — technologie à choisir)*
