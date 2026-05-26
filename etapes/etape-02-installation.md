@@ -26,75 +26,121 @@ chmod +x setup.sh
 
 ---
 
-## 2. Préparer le fichier `.env`
+## 2. Choisir ton provider IA
 
-Le fichier `.env` contient tous les secrets. Il ne doit jamais être versionné.
+OpenClaw supporte plusieurs sources de modèles. Pour ce tuto, on couvre les deux options **sans coût d'API supplémentaire** si tu as déjà un abonnement :
+
+| Provider | Prérequis | Auth |
+|---|---|---|
+| **GitHub Copilot** | Abonnement GitHub Copilot actif | Device flow OAuth (navigateur) |
+| **Claude Code** | Abonnement Claude Pro/Max actif | Réutilise le login Claude CLI existant |
+
+> [!NOTE]
+> Le choix se fait **pendant l'onboarding interactif**. Pas besoin de décider maintenant,
+> mais assure-toi d'avoir accès à l'un des deux avant de continuer.
+
+### Pré-requis pour Claude Code uniquement
+
+Si tu choisis **Claude Code**, installe et connecte le CLI **avant** de lancer le setup :
+
+```bash
+npm install -g @anthropic-ai/claude-code
+claude login
+```
+
+Vérifie que c'est fonctionnel :
+
+```bash
+claude --version
+```
+
+Pour GitHub Copilot, rien à faire à l'avance — le device flow se lance pendant le setup.
+
+---
+
+## 3. Préparer le fichier `.env`
+
+Le fichier `.env` contient les secrets de configuration. Il ne doit jamais être versionné.
 
 ```bash
 nano ~/openclaw/.env
 ```
 
-Contenu minimal à compléter :
+Contenu minimal :
 
 ```env
-# Image à utiliser (image pré-compilée officielle)
+# Image pré-compilée officielle
 OPENCLAW_IMAGE=ghcr.io/openclaw/openclaw:latest
 
-# Désactiver Bonjour/mDNS (inutile et problématique en Docker bridge)
+# Désactiver Bonjour/mDNS (problématique en réseau Docker bridge)
 OPENCLAW_DISABLE_BONJOUR=1
 
-# Répertoires persistants (bind mounts)
+# Répertoires persistants (bind mounts vers le VPS)
 OPENCLAW_CONFIG_DIR=/home/openclaw/openclaw/config
 OPENCLAW_WORKSPACE_DIR=/home/openclaw/openclaw/workspace
 OPENCLAW_AUTH_PROFILE_SECRET_DIR=/home/openclaw/openclaw/data
 
-# Clé API du modèle IA (ex: Anthropic)
-ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxx
-# ou OpenAI :
-# OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxx
-
 # Token Discord (à remplir à l'étape 4)
-# DISCORD_BOT_TOKEN=MTxxxxxxxxxxxxxxxxx
+# DISCORD_BOT_TOKEN=MTxxxx...xxxx
 ```
 
 > [!WARNING]
-> Le fichier `.env` doit rester en permissions `600` (créé ainsi à l'étape 1).
-> Vérifie : `ls -la ~/openclaw/.env` → doit afficher `-rw-------`
+> Vérifie les permissions : `ls -la ~/openclaw/.env` → doit afficher `-rw-------`
+> Si ce n'est pas le cas : `chmod 600 ~/openclaw/.env`
 
 > [!IMPORTANT]
 > `OPENCLAW_GATEWAY_TOKEN` sera **généré automatiquement** par le script de setup.
-> Ne pas le définir à la main pour l'instant.
+> Ne pas le définir à la main.
 
 ---
 
-## 3. Lancer le setup
+## 4. Lancer le setup (onboarding interactif)
 
-Le script d'onboarding installe OpenClaw, génère le token gateway, et démarre le conteneur.
+> [!IMPORTANT]
+> Le script est **interactif** : il requiert un terminal TTY.
+> Lance-le directement dans ta session SSH — pas dans un script ou un cron.
 
 ```bash
 cd ~/openclaw
-OPENCLAW_IMAGE=ghcr.io/openclaw/openclaw:latest ./setup.sh
+./setup.sh
 ```
 
 Le script va :
-- Puller l'image depuis `ghcr.io/openclaw/openclaw:latest`
-- Lancer l'onboarding interactif (choix du provider IA, saisie de la clé API)
-- Générer un `OPENCLAW_GATEWAY_TOKEN` et l'écrire dans `.env`
-- Démarrer le gateway via `docker compose up -d`
+1. Puller l'image `ghcr.io/openclaw/openclaw:latest`
+2. Lancer l'onboarding interactif — **choix du provider IA** (voir ci-dessous)
+3. Générer un `OPENCLAW_GATEWAY_TOKEN` et l'écrire dans `.env`
+4. Démarrer le gateway via `docker compose up -d`
 
-> [!NOTE]
-> L'onboarding est interactif : il va poser des questions sur ton provider IA.
-> Si tu as déjà mis la clé API dans `.env`, tu peux en général appuyer sur Entrée pour confirmer.
+### Option A — GitHub Copilot
+
+Quand l'onboarding te demande ton provider, choisis **GitHub Copilot**.
+
+Il lance le **device flow OAuth** :
+- Il affiche une URL et un code à usage unique
+- Ouvre l'URL dans ton navigateur, connecte-toi à GitHub, entre le code
+- Garde le terminal SSH ouvert jusqu'à confirmation
+
+```
+→ Visit: https://github.com/login/device
+→ Code:  XXXX-XXXX
+→ Waiting for authorization...
+✓ Logged in as ton-username
+```
+
+### Option B — Claude Code
+
+Choisis **Claude CLI** dans l'onboarding — OpenClaw réutilise automatiquement
+le token de la session `claude login` effectuée à l'étape précédente.
 
 ---
 
-## 4. Vérifier que tout tourne
+## 5. Vérifier que tout tourne
 
 ```bash
-# Vérifier que le conteneur est up
+# État des conteneurs
 docker compose ps
 
-# Vérifier les logs du gateway
+# Logs du gateway (Ctrl+C pour quitter)
 docker compose logs -f openclaw-gateway
 ```
 
@@ -104,7 +150,7 @@ Résultat attendu dans les logs :
 openclaw-gateway  | Gateway running on http://127.0.0.1:18789
 ```
 
-Vérification santé (depuis le VPS) :
+Health checks depuis le VPS :
 
 ```bash
 curl -fsS http://127.0.0.1:18789/healthz
@@ -120,9 +166,9 @@ Les deux doivent répondre `OK`.
 
 ---
 
-## 5. Permissions sur les dossiers montés
+## 6. Permissions sur les dossiers montés
 
-L'image Docker tourne avec l'utilisateur `node` (uid 1000). Si tu vois des erreurs de permission :
+L'image Docker tourne avec l'utilisateur `node` (uid 1000). Si tu vois des erreurs de permission au démarrage :
 
 ```bash
 sudo chown -R 1000:1000 ~/openclaw/config ~/openclaw/workspace ~/openclaw/data
@@ -130,22 +176,21 @@ sudo chown -R 1000:1000 ~/openclaw/config ~/openclaw/workspace ~/openclaw/data
 
 ---
 
-## 6. Activer le démarrage automatique
-
-Pour que OpenClaw redémarre automatiquement au boot du VPS :
-
-```bash
-cd ~/openclaw
-docker compose up -d
-```
+## 7. Démarrage automatique au boot
 
 Docker gère déjà le restart avec la policy `unless-stopped` définie dans le `docker-compose.yml` officiel.
 
-Vérifie que la policy est bien en place :
+Vérifie :
 
 ```bash
 docker inspect openclaw-gateway --format '{{.HostConfig.RestartPolicy.Name}}'
 # attendu : unless-stopped
+```
+
+Pour redémarrer manuellement :
+
+```bash
+cd ~/openclaw && docker compose restart
 ```
 
 ---
@@ -154,12 +199,12 @@ docker inspect openclaw-gateway --format '{{.HostConfig.RestartPolicy.Name}}'
 
 À ce stade :
 
-- [x] Image officielle `ghcr.io/openclaw/openclaw:latest` pullée
-- [x] `docker-compose.yml` en place dans `~/openclaw/`
-- [x] `.env` configuré avec la clé API IA + permissions `600`
+- [x] `docker-compose.yml` et `setup.sh` en place dans `~/openclaw/`
+- [x] `.env` configuré avec permissions `600`
+- [x] Provider IA configuré (GitHub Copilot ou Claude Code)
 - [x] Onboarding complété, `OPENCLAW_GATEWAY_TOKEN` généré
 - [x] Gateway up et accessible sur `http://127.0.0.1:18789` (loopback uniquement)
-- [x] Health checks `/healthz` et `/readyz` répondent OK
+- [x] Health checks `/healthz` et `/readyz` répondent `OK`
 - [x] Restart policy `unless-stopped` active
 
 ➡️ **Étape suivante : [Étape 3 — Créer le bot Discord](./etape-03-discord-bot.md)**
