@@ -40,6 +40,7 @@ Tutoriel complet pour installer et utiliser OpenClaw sur un VPS avec un bot Disc
 
 | # | Étape | Description |
 |---|---|---|
+| - | [Référence — Commandes Discord](02-configuration-utilisation/etapes/etape-00-commandes-discord.md) | Slash commands essentielles, modèle, session, administration |
 | 1 | [Concepts : agent principal vs spécialisés](02-configuration-utilisation/etapes/etape-01-concepts.md) | Architecture multi-agents, workspaces, bindings |
 | 2 | [Premier contact avec l'agent principal](02-configuration-utilisation/etapes/etape-02-premier-contact.md) | DM Discord, personnalisation via conversation |
 | 3 | [Créer l'agent assistant](02-configuration-utilisation/etapes/etape-03-creer-agent.md) | Un prompt → l'agent crée workspace, config, bindings Discord |

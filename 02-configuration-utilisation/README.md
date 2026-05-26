@@ -34,6 +34,7 @@ Tape `exit` ou `Ctrl+C` pour quitter.
 
 ## Étapes
 
+- [x] [Référence — Commandes Discord (slash commands)](etapes/etape-00-commandes-discord.md)
 - [x] [Étape 1 — Concepts : agent principal vs agents spécialisés](etapes/etape-01-concepts.md)
 - [x] [Étape 2 — Premier contact avec l'agent principal](etapes/etape-02-premier-contact.md)
 - [x] [Étape 3 — Créer l'agent assistant](etapes/etape-03-creer-agent.md)
