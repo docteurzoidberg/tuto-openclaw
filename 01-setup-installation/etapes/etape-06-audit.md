@@ -159,4 +159,4 @@ tar czf openclaw-backup-$(date +%Y%m%d).tar.gz ~/openclaw/config ~/openclaw/data
 
 **Le setup de base est terminé.** Ton bot Discord est opérationnel, sécurisé, et redémarre automatiquement au boot.
 
-➡️ **Suite : [Tuto 2 — Configurer un agent assistant personnel](../../tuto-agent-personnel/README.md)**
+➡️ **Suite : [Partie 2 — Configuration & Utilisation](../../02-configuration-utilisation/README.md)**
