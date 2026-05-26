@@ -73,17 +73,4 @@ Note que mon fuseau horaire est Europe/Paris.
 
 ---
 
-## Alternative : CLI sur le VPS
-
-Si Discord n'est pas disponible (bot muet, problème de connexion), tu peux
-interagir avec l'agent via SSH sur le VPS :
-
-```bash
-docker compose run --rm openclaw-cli chat --agent main
-```
-
-Tape tes messages directement dans le terminal. Même agent, mêmes capacités.
-
----
-
 ➡️ **Étape suivante : [Étape 3 — Créer l'agent assistant](./etape-03-creer-agent.md)**

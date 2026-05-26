@@ -7,6 +7,31 @@ Pas de fichiers de config à éditer — tu converses, l'agent fait.
 
 - Partie 1 complétée (OpenClaw installé, bot Discord connecté)
 
+## Canal principal : Discord
+
+Tout ce tuto se fait en **DM Discord avec ton bot**.
+C'est la façon naturelle d'utiliser OpenClaw — tu parles, l'agent agit.
+
+## Fallback : CLI sur le VPS
+
+Si Discord n'est pas disponible (bot muet, problème réseau, gateway à relancer),
+tu peux interagir avec l'agent directement depuis le VPS via SSH :
+
+```bash
+ssh openclaw@<IP_DU_VPS>
+cd ~/openclaw
+docker compose run --rm openclaw-cli chat
+```
+
+Tu te retrouves dans un terminal de chat avec l'agent principal.
+Mêmes capacités qu'en Discord — tu peux envoyer exactement les mêmes prompts.
+Tape `exit` ou `Ctrl+C` pour quitter.
+
+> [!NOTE]
+> Le CLI est un **fallback**, pas le canal principal.
+> Dans la suite du tuto, tous les exemples sont en Discord.
+> Si tu es en CLI, les prompts sont identiques — copie-colle.
+
 ## Étapes
 
 - [x] [Étape 1 — Concepts : agent principal vs agents spécialisés](etapes/etape-01-concepts.md)
