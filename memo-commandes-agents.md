@@ -9,9 +9,9 @@
 ## Lister les agents
 
 ```bash
-openclaw agents list
-openclaw agents list --bindings   # inclut les règles de routage
-openclaw agents list --json
+docker compose run --rm openclaw-cli agents list
+docker compose run --rm openclaw-cli agents list --bindings   # inclut les règles de routage
+docker compose run --rm openclaw-cli agents list --json
 ```
 
 ---
@@ -20,10 +20,10 @@ openclaw agents list --json
 
 ```bash
 # Interactif (wizard)
-openclaw agents add assistant
+docker compose run --rm -it openclaw-cli agents add assistant
 
 # Non-interactif (scripted)
-openclaw agents add assistant \
+docker compose run --rm openclaw-cli agents add assistant \
   --workspace ~/.openclaw/workspace-assistant \
   --non-interactive
 ```
@@ -33,7 +33,7 @@ openclaw agents add assistant \
 ## Créer un agent et lui assigner des channels Discord directement
 
 ```bash
-openclaw agents add assistant \
+docker compose run --rm openclaw-cli agents add assistant \
   --workspace ~/.openclaw/workspace-assistant \
   --bind discord:* \
   --non-interactive
@@ -45,15 +45,15 @@ openclaw agents add assistant \
 
 ```bash
 # Voir tous les bindings
-openclaw agents bindings
-openclaw agents bindings --agent assistant
+docker compose run --rm openclaw-cli agents bindings
+docker compose run --rm openclaw-cli agents bindings --agent assistant
 
 # Assigner un channel à un agent
-openclaw agents bind --agent assistant --bind discord:*
+docker compose run --rm openclaw-cli agents bind --agent assistant --bind discord:*
 
 # Retirer un binding
-openclaw agents unbind --agent assistant --bind discord:*
-openclaw agents unbind --agent assistant --all   # retirer tous les bindings
+docker compose run --rm openclaw-cli agents unbind --agent assistant --bind discord:*
+docker compose run --rm openclaw-cli agents unbind --agent assistant --all   # retirer tous les bindings
 ```
 
 ### Formats de binding
@@ -71,10 +71,10 @@ openclaw agents unbind --agent assistant --all   # retirer tous les bindings
 
 ```bash
 # Lire depuis IDENTITY.md dans le workspace
-openclaw agents set-identity --agent assistant --from-identity
+docker compose run --rm openclaw-cli agents set-identity --agent assistant --from-identity
 
 # Définir manuellement
-openclaw agents set-identity --agent assistant \
+docker compose run --rm openclaw-cli agents set-identity --agent assistant \
   --name "JARVIS" \
   --emoji "🧠"
 ```
@@ -84,8 +84,8 @@ openclaw agents set-identity --agent assistant \
 ## Supprimer un agent
 
 ```bash
-openclaw agents delete assistant           # demande confirmation
-openclaw agents delete assistant --force   # sans confirmation
+docker compose run --rm openclaw-cli agents delete assistant           # demande confirmation
+docker compose run --rm openclaw-cli agents delete assistant --force   # sans confirmation
 ```
 
 > [!NOTE]
@@ -98,10 +98,10 @@ openclaw agents delete assistant --force   # sans confirmation
 
 | Action | Commande |
 |---|---|
-| Lister les agents | `agents list` |
-| Voir les bindings | `agents bindings` |
-| Créer un agent | `agents add <id> --workspace <path>` |
-| Assigner un channel | `agents bind --agent <id> --bind <channel>` |
-| Retirer un channel | `agents unbind --agent <id> --bind <channel>` |
-| Définir l'identité | `agents set-identity --agent <id> --from-identity` |
-| Supprimer un agent | `agents delete <id>` |
+| Lister les agents | `docker compose run --rm openclaw-cli agents list` |
+| Voir les bindings | `docker compose run --rm openclaw-cli agents bindings` |
+| Créer un agent | `docker compose run --rm -it openclaw-cli agents add <id>` |
+| Assigner un channel | `docker compose run --rm openclaw-cli agents bind --agent <id> --bind <channel>` |
+| Retirer un channel | `docker compose run --rm openclaw-cli agents unbind --agent <id> --bind <channel>` |
+| Définir l'identité | `docker compose run --rm openclaw-cli agents set-identity --agent <id> --from-identity` |
+| Supprimer un agent | `docker compose run --rm openclaw-cli agents delete <id>` |

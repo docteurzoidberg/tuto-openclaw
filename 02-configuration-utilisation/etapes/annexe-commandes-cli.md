@@ -47,21 +47,21 @@ docker compose up -d
 
 ```bash
 # Lister les agents
-openclaw agents list
-openclaw agents list --bindings   # avec les règles de routage
-openclaw agents list --json
+docker compose run --rm openclaw-cli agents list
+docker compose run --rm openclaw-cli agents list --bindings   # avec les règles de routage
+docker compose run --rm openclaw-cli agents list --json
 
 # Créer un agent (interactif)
-openclaw agents add <id>
+docker compose run --rm -it openclaw-cli agents add <id>
 
 # Créer un agent (non-interactif)
-openclaw agents add <id> \
+docker compose run --rm openclaw-cli agents add <id> \
   --workspace ~/.openclaw/workspace-<id> \
   --non-interactive
 
 # Supprimer un agent
-openclaw agents delete <id>           # avec confirmation
-openclaw agents delete <id> --force   # sans confirmation
+docker compose run --rm openclaw-cli agents delete <id>           # avec confirmation
+docker compose run --rm openclaw-cli agents delete <id> --force   # sans confirmation
 ```
 
 ---
@@ -70,15 +70,15 @@ openclaw agents delete <id> --force   # sans confirmation
 
 ```bash
 # Voir tous les bindings
-openclaw agents bindings
-openclaw agents bindings --agent <id>
+docker compose run --rm openclaw-cli agents bindings
+docker compose run --rm openclaw-cli agents bindings --agent <id>
 
 # Assigner un channel à un agent
-openclaw agents bind --agent <id> --bind discord:<channel-id>
+docker compose run --rm openclaw-cli agents bind --agent <id> --bind discord:<channel-id>
 
 # Retirer un binding
-openclaw agents unbind --agent <id> --bind discord:<channel-id>
-openclaw agents unbind --agent <id> --all   # retirer tous les bindings
+docker compose run --rm openclaw-cli agents unbind --agent <id> --bind discord:<channel-id>
+docker compose run --rm openclaw-cli agents unbind --agent <id> --all   # retirer tous les bindings
 ```
 
 ### Formats de binding
@@ -95,10 +95,10 @@ openclaw agents unbind --agent <id> --all   # retirer tous les bindings
 
 ```bash
 # Lire depuis IDENTITY.md dans le workspace
-openclaw agents set-identity --agent <id> --from-identity
+docker compose run --rm openclaw-cli agents set-identity --agent <id> --from-identity
 
 # Définir manuellement
-openclaw agents set-identity --agent <id> --name "JARVIS" --emoji "🧠"
+docker compose run --rm openclaw-cli agents set-identity --agent <id> --name "JARVIS" --emoji "🧠"
 ```
 
 ---
@@ -107,10 +107,10 @@ openclaw agents set-identity --agent <id> --name "JARVIS" --emoji "🧠"
 
 ```bash
 # Lister les cron jobs actifs
-openclaw cron list
+docker compose run --rm openclaw-cli cron list
 
 # Supprimer un cron job
-openclaw cron remove <job-id>
+docker compose run --rm openclaw-cli cron remove <job-id>
 ```
 
 ---
@@ -119,14 +119,14 @@ openclaw cron remove <job-id>
 
 ```bash
 # Afficher toute la configuration
-openclaw config show
+docker compose run --rm openclaw-cli config show
 
 # Lire une valeur
-openclaw config get <clé>
-openclaw config get bindings
+docker compose run --rm openclaw-cli config get <clé>
+docker compose run --rm openclaw-cli config get bindings
 
 # Modifier une valeur
-openclaw config set <clé>=<valeur>
+docker compose run --rm openclaw-cli config set <clé>=<valeur>
 ```
 
 ---
@@ -148,13 +148,13 @@ tar czf ~/backup-openclaw-$(date +%Y%m%d).tar.gz \
 
 | Action | Commande |
 |---|---|
-| Diagnostic complet | `openclaw doctor` |
+| Diagnostic complet | `docker compose run --rm openclaw-cli doctor` |
 | Relancer le gateway | `docker compose restart openclaw-gateway` |
-| Lister les agents | `openclaw agents list --bindings` |
-| Créer un agent | `openclaw agents add <id>` |
-| Assigner un channel | `openclaw agents bind --agent <id> --bind discord:<id>` |
-| Lister les rappels | `openclaw cron list` |
-| Voir la config | `openclaw config show` |
+| Lister les agents | `docker compose run --rm openclaw-cli agents list --bindings` |
+| Créer un agent | `docker compose run --rm -it openclaw-cli agents add <id>` |
+| Assigner un channel | `docker compose run --rm openclaw-cli agents bind --agent <id> --bind discord:<id>` |
+| Lister les rappels | `docker compose run --rm openclaw-cli cron list` |
+| Voir la config | `docker compose run --rm openclaw-cli config show` |
 | Mettre à jour | `docker compose pull && docker compose up -d` |
 
 ---
