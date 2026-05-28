@@ -41,17 +41,22 @@ OpenClaw supporte plusieurs sources de modèles. Pour ce tuto, on couvre les deu
 
 ### Pré-requis pour Claude Code uniquement
 
-Si tu choisis **Claude Code**, installe et connecte le CLI **avant** de lancer le setup :
+Si tu choisis **Claude Code**, le CLI est déjà inclus dans l'image OpenClaw — rien à installer sur le host.
+
+L'authentification se fait **à l'intérieur du conteneur**, après le démarrage (étape 4) :
 
 ```bash
-npm install -g @anthropic-ai/claude-code
-claude login
+docker exec -it openclaw-gateway claude login
 ```
 
-Vérifie que c'est fonctionnel :
+> [!IMPORTANT]
+> Cette commande est **interactive** : elle ouvre un flux OAuth dans ton navigateur.
+> Lance-la depuis ta session SSH, pas depuis un script.
+
+Vérifie que le login est fonctionnel dans le conteneur :
 
 ```bash
-claude --version
+docker exec -it openclaw-gateway claude --version
 ```
 
 Pour GitHub Copilot, rien à faire à l'avance — le device flow se lance pendant le setup.
@@ -129,8 +134,15 @@ Il lance le **device flow OAuth** :
 
 ### Option B — Claude Code
 
-Choisis **Claude CLI** dans l'onboarding — OpenClaw réutilise automatiquement
-le token de la session `claude login` effectuée à l'étape précédente.
+Choisis **Claude CLI** dans l'onboarding.
+
+Une fois le conteneur démarré, authentifie-toi **dans le conteneur** :
+
+```bash
+docker exec -it openclaw-gateway claude login
+```
+
+OpenClaw réutilise automatiquement ce token pour les sessions suivantes.
 
 ---
 
