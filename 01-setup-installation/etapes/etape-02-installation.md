@@ -41,12 +41,35 @@ OpenClaw supporte plusieurs sources de modèles. Pour ce tuto, on couvre les deu
 
 ### Pré-requis pour Claude Code uniquement
 
-Le CLI Claude est déjà inclus dans l'image OpenClaw — **rien à installer sur le host**.
+Le CLI Claude est inclus dans l'image OpenClaw — rien à installer sur le host.
 
-L'authentification se fait après le démarrage du conteneur (étape 4, Option B).
-Rien à faire ici — continue avec l'étape suivante.
+Mais l'onboarding (`setup.sh`) va demander le provider dès le départ.
+Il faut donc s'authentifier **avant** de le lancer, dans un conteneur éphémère :
 
-Pour GitHub Copilot, rien à faire à l'avance non plus — le device flow se lance pendant le setup.
+```bash
+cd ~/openclaw
+
+# Puller l'image d'abord
+docker compose pull
+
+# S'authentifier dans un conteneur temporaire (volumes déjà montés)
+docker compose run --rm -it openclaw-gateway claude login
+```
+
+> [!IMPORTANT]
+> Cette commande est **interactive** : elle ouvre un flux OAuth dans ton navigateur.
+> Lance-la depuis ta session SSH, pas depuis un script.
+
+Vérifie que le login est fonctionnel :
+
+```bash
+docker compose run --rm openclaw-gateway claude --version
+```
+
+L'auth est persistée dans `~/openclaw/data`. Quand `setup.sh` démarrera le vrai conteneur,
+le token sera déjà en place — l'onboarding le détectera automatiquement.
+
+Pour GitHub Copilot, rien à faire à l'avance — le device flow se lance pendant le setup.
 
 ---
 
@@ -123,23 +146,7 @@ Il lance le **device flow OAuth** :
 
 Choisis **Claude CLI** dans l'onboarding.
 
-Le `setup.sh` démarre le conteneur (`docker compose up -d`), puis tu dois authentifier Claude **dans le conteneur** — c'est une commande interactive, garde ta session SSH ouverte :
-
-```bash
-docker exec -it openclaw-gateway claude login
-```
-
-> [!IMPORTANT]
-> Cette commande ouvre un flux OAuth dans ton navigateur.
-> Lance-la depuis ta session SSH, pas depuis un script.
-
-Vérifie que le login est fonctionnel :
-
-```bash
-docker exec -it openclaw-gateway claude --version
-```
-
-OpenClaw réutilise automatiquement ce token pour les sessions suivantes.
+Si tu as suivi les pré-requis ci-dessus, le token est déjà en place — l'onboarding le détectera et n'en demandera pas d'autre.
 
 ---
 
