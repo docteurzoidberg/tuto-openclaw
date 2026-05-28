@@ -41,25 +41,12 @@ OpenClaw supporte plusieurs sources de modèles. Pour ce tuto, on couvre les deu
 
 ### Pré-requis pour Claude Code uniquement
 
-Si tu choisis **Claude Code**, le CLI est déjà inclus dans l'image OpenClaw — rien à installer sur le host.
+Le CLI Claude est déjà inclus dans l'image OpenClaw — **rien à installer sur le host**.
 
-L'authentification se fait **à l'intérieur du conteneur**, après le démarrage (étape 4) :
+L'authentification se fait après le démarrage du conteneur (étape 4, Option B).
+Rien à faire ici — continue avec l'étape suivante.
 
-```bash
-docker exec -it openclaw-gateway claude login
-```
-
-> [!IMPORTANT]
-> Cette commande est **interactive** : elle ouvre un flux OAuth dans ton navigateur.
-> Lance-la depuis ta session SSH, pas depuis un script.
-
-Vérifie que le login est fonctionnel dans le conteneur :
-
-```bash
-docker exec -it openclaw-gateway claude --version
-```
-
-Pour GitHub Copilot, rien à faire à l'avance — le device flow se lance pendant le setup.
+Pour GitHub Copilot, rien à faire à l'avance non plus — le device flow se lance pendant le setup.
 
 ---
 
@@ -136,10 +123,20 @@ Il lance le **device flow OAuth** :
 
 Choisis **Claude CLI** dans l'onboarding.
 
-Une fois le conteneur démarré, authentifie-toi **dans le conteneur** :
+Le `setup.sh` démarre le conteneur (`docker compose up -d`), puis tu dois authentifier Claude **dans le conteneur** — c'est une commande interactive, garde ta session SSH ouverte :
 
 ```bash
 docker exec -it openclaw-gateway claude login
+```
+
+> [!IMPORTANT]
+> Cette commande ouvre un flux OAuth dans ton navigateur.
+> Lance-la depuis ta session SSH, pas depuis un script.
+
+Vérifie que le login est fonctionnel :
+
+```bash
+docker exec -it openclaw-gateway claude --version
 ```
 
 OpenClaw réutilise automatiquement ce token pour les sessions suivantes.
